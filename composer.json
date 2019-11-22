@@ -1,5 +1,6 @@
 {
     "name": "alfredbez/install-oxid-for-module",
+    "version": "0.1.0",
     "authors": [
         {
             "name": "Alfred Bez",
