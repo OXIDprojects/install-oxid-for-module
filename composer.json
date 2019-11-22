@@ -1,0 +1,11 @@
+{
+    "name": "alfredbez/install-oxid-for-module",
+    "authors": [
+        {
+            "name": "Alfred Bez",
+            "email": "alfred.bez@googlemail.com"
+        }
+    ],
+    "require": {},
+    "bin": ["bin/install-oxid"]
+}
