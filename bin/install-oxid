@@ -21,6 +21,7 @@ PACKAGE_NAME=$(grep '"name":' composer.json | awk -F'"' '{print $4}')
 
 echo "installing OXID version ${OXID} in ${CI_SYSTEM}"
 
+BUILD_DIR=$(pwd)
 cd ~/ || exit
 mkdir OXID
 cd OXID || exit
@@ -38,6 +39,6 @@ composer config minimum-stability dev
 #Module Registrieren
 #composer config repo.packagist false
 echo "installing ${PACKAGE_NAME} in ${TARGET_PATH}"
-composer config repositories.${CI_SYSTEM} path "${TRAVIS_BUILD_DIR}"
+composer config repositories.${CI_SYSTEM} path "${BUILD_DIR}"
 composer clear-cache
 composer require "${PACKAGE_NAME}:*"
