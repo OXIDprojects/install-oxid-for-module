@@ -1,12 +1,6 @@
 {
-    "name": "alfredbez/install-oxid-for-module",
+    "name": "oxid-professional-services/install-oxid-for-module",
     "version": "0.1.0",
-    "authors": [
-        {
-            "name": "Alfred Bez",
-            "email": "alfred.bez@googlemail.com"
-        }
-    ],
     "require": {},
     "bin": ["bin/install-oxid"]
 }

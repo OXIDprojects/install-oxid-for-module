@@ -6,7 +6,7 @@ This package installs an OXID Shop in CI to make testing standalone OXID modules
 
 Install it via composer:
 ```
-composer require --dev alfredbez/install-oxid-for-module
+composer require --dev oxid-professional-services/install-oxid-for-module
 ```
 
 You can then run this command to install an OXID shop and configure it:
