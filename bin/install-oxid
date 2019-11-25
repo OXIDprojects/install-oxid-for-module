@@ -48,5 +48,7 @@ composer config minimum-stability dev
 #composer config repo.packagist false
 echo "installing ${PACKAGE_NAME} in ${TARGET_PATH}"
 composer config repositories.${CI_SYSTEM} path "${BUILD_DIR}"
-composer clear-cache
+if [ -n $COMPOSER_CLEAR_CACHE ]; then
+    composer clear-cache
+fi
 composer require "${PACKAGE_NAME}:*"
