@@ -44,12 +44,13 @@ sed -i -e "s@run_tests_for_shop: true@run_tests_for_shop: false@g" test_config.y
 
 #just in case the module has private dependencies clone them into the oxid project
 php -r "
-\$repositories=json_decode(file_get_contents('$BUILD_DIR/composer.json'),true)['repositories'];
-if(! empty(\$repositories)) {
-  \$c=json_decode(file_get_contents('composer.json'), true);
-  \$data=array_merge(['repositories'=>\$repositories],\$c);
-  file_put_contents('composer.json', json_encode(\$data, JSON_PRETTY_PRINT));
-}"
+\$orgComposerJson=json_decode(file_get_contents('$BUILD_DIR/composer.json'),true);
+\$reUse['repositories'] = \$orgComposerJson['repositories'];
+\$reUse['config'] = \$orgComposerJson['config'];
+\$c=json_decode(file_get_contents('composer.json'), true);
+\$data=array_merge_recursive(\$reUse,\$c);
+file_put_contents('composer.json', json_encode(\$data, JSON_PRETTY_PRINT));
+"
 composer config minimum-stability dev
 #Module Registrieren
 #composer config repo.packagist false
