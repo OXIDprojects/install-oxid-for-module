@@ -34,7 +34,7 @@ OXID_PATH=$(pwd)
 echo "installing OXID version ${OXID} on ${CI_SYSTEM} in path $OXID_PATH"
 
 
-composer create-project --no-interaction oxid-esales/oxideshop-project . dev-b-"${OXID}"-ce
+composer create-project --no-interaction --no-progress oxid-esales/oxideshop-project . dev-b-"${OXID}"-ce
 sed -i -e "s@<dbHost>@${DB_HOST}@g; s@<dbName>@${DB_NAME}@g; s@<dbUser>@${DB_USER}@g; s@<dbPwd>@${DB_PWD}@g" source/config.inc.php
 sed -i -e "s@<sShopURL>@${SHOP_URL}@g; s@sLogLevel = 'error'@sLogLevel = '${SHOP_LOG_LEVEL}'@g" source/config.inc.php
 sed -i -e "s@<sShopDir>@${OXID_PATH}/source@g; s@<sCompileDir>@${OXID_PATH}/source/tmp@g" source/config.inc.php
