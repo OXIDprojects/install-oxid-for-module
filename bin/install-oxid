@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 OXID=${OXID:-6.0}
 
 DB_HOST=${DB_HOST:-127.0.0.1}
@@ -22,18 +21,21 @@ if [ -z $CI_SYSTEM ]; then
    echo "travis, gitlab-ci";
    CI_SYSTEM="unknown-ci"
 fi
-
+#using a specific version to bypass composer cache that may have already found the module
+#on a public or private repository like packagist
+VERSION="0.0.0-alpha$(( ( RANDOM % 100000 )  + 1 ))"
 TARGET_PATH=$(grep '"target-directory":' composer.json | awk -F'"' '{print $4}')
 PACKAGE_NAME=$(grep '"name":' composer.json | awk -F'"' '{print $4}')
 BUILD_DIR=$(pwd)
+
+composer config version $VERSION
 
 cd ~/ || exit
 mkdir -p OXID
 cd OXID || exit
 OXID_PATH=$(pwd)
+
 echo "installing OXID version ${OXID} on ${CI_SYSTEM} in path $OXID_PATH"
-
-
 composer create-project --no-interaction --no-progress oxid-esales/oxideshop-project . dev-b-"${OXID}"-ce
 sed -i -e "s@<dbHost>@${DB_HOST}@g; s@<dbName>@${DB_NAME}@g; s@<dbUser>@${DB_USER}@g; s@<dbPwd>@${DB_PWD}@g" source/config.inc.php
 sed -i -e "s@<sShopURL>@${SHOP_URL}@g; s@sLogLevel = 'error'@sLogLevel = '${SHOP_LOG_LEVEL}'@g" source/config.inc.php
@@ -44,7 +46,8 @@ sed -i -e "s@run_tests_for_shop: true@run_tests_for_shop: false@g" test_config.y
 
 composer config repositories.build path "${BUILD_DIR}"
 
-#just in case the module has private dependencies clone them into the oxid project
+#just in case the module has private repository dependencies clone that config
+#into the oxid project
 php -r "
 \$orgComposerJson=json_decode(file_get_contents('$BUILD_DIR/composer.json'),true);
 \$reUse['repositories'] = \$orgComposerJson['repositories'];
@@ -60,4 +63,4 @@ composer config minimum-stability dev
 #Module Registrieren
 #composer config repo.packagist false
 echo "installing ${PACKAGE_NAME} in ${TARGET_PATH}"
-composer require "${PACKAGE_NAME}:*"
+composer require "${PACKAGE_NAME}:$VERSION"
