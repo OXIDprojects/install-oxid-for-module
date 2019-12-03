@@ -50,9 +50,9 @@ composer config repositories.build path "${BUILD_DIR}"
 #into the oxid project
 php -r "
 \$orgComposerJson=json_decode(file_get_contents('$BUILD_DIR/composer.json'),true);
-\$reUse['repositories'] = \$orgComposerJson['repositories'];
-\$reUse['config'] = \$orgComposerJson['config'];
-\$reUse['require-dev'] = \$orgComposerJson['require-dev'];
+\$reUse['repositories'] = \$orgComposerJson['repositories'] ? \$orgComposerJson['repositories'] : [];
+\$reUse['config'] = \$orgComposerJson['config'] ? \$orgComposerJson['config'] : [];
+\$reUse['require-dev'] = \$orgComposerJson['require-dev'] ? \$orgComposerJson['require-dev'] : [];
 \$c=json_decode(file_get_contents('composer.json'), true);
 \$c=array_replace_recursive(\$c, \$reUse);
 file_put_contents('composer.json', json_encode(\$c, JSON_PRETTY_PRINT));
