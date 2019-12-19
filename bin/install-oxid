@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 OXID=${OXID:-6.0}
 
+set -ex # see https://stackoverflow.com/a/38343189/2123108
+
 DB_HOST=${DB_HOST:-127.0.0.1}
 DB_NAME=${DB_NAME:-oxid}
 DB_USER=${DB_USER:-root}
