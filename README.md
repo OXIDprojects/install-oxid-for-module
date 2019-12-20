@@ -31,4 +31,4 @@ Environment Variables:
 | SHOP_URL | http://127.0.0.1 |
 | SHOP_LOG_LEVEL | info |
 
-You can see an example here: https://github.com/OXIDprojects/oxid-module-internals/blob/master/.travis.yml
+You can see an example here: https://github.com/OXIDprojects/oxid-module-internals/blob/1973b16bbe56f972a4061725ec1ce96d371c1f7f/.travis.yml
