@@ -23,8 +23,9 @@ if [ -z $CI_SYSTEM ]; then
    echo "travis, gitlab-ci";
    CI_SYSTEM="unknown-ci"
 fi
-#using a specific version to bypass composer cache that may have already found the module
-#on a public or private repository like packagist
+
+# using a specific version to bypass composer cache that may have already found the module
+# on a public or private repository like packagist
 VERSION="0.0.0-alpha$(( ( RANDOM % 100000 )  + 1 ))"
 TARGET_PATH=$(grep '"target-directory":' composer.json | awk -F'"' '{print $4}')
 PACKAGE_NAME=$(grep '"name":' composer.json | awk -F'"' '{print $4}')
@@ -55,7 +56,6 @@ BUILD_DIR=$BUILD_DIR php "$PACKAGE_DIR"/copy-composer-contents.php
 
 
 composer config minimum-stability dev
-#Module Registrieren
-#composer config repo.packagist false
+# register module
 echo "installing ${PACKAGE_NAME} in ${TARGET_PATH}"
 composer require "${PACKAGE_NAME}:$VERSION"
