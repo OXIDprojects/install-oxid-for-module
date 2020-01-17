@@ -9,6 +9,15 @@ DB_USER=${DB_USER:-root}
 DB_PWD=${DB_PWD:-}
 SHOP_URL=${SHOP_URL:-http://127.0.0.1}
 SHOP_LOG_LEVEL=${SHOP_LOG_LEVEL:-info}
+OXID_EDITION=${OXID_EDITION:-ce}
+OXID_EDITION=$(echo "$OXID_EDITION" | awk '{print tolower($0)}')
+OXID_EDITIONS=("ce pe ee")
+if [[ ! " ${OXID_EDITIONS[*]} " =~ ${OXID_EDITION} ]]; then
+    echo "'${OXID_EDITION}' is not a valid OXID edition"
+    echo "possible values:"
+    ( IFS=$'\n'; echo "${OXID_EDITIONS[*]}" )
+    exit 1
+fi
 
 if [ -n "$TRAVIS" ]; then
   CI_SYSTEM="travis_ci"
@@ -34,19 +43,24 @@ PACKAGE_DIR="$(dirname "$(readlink -f "$0")")"
 
 composer config version $VERSION
 
-cd ~/ || exit
+cd ~/ || exit 1
 mkdir -p OXID
-cd OXID || exit
+cd OXID || exit 1
 OXID_PATH=$(pwd)
 
-echo "installing OXID version ${OXID} on ${CI_SYSTEM} in path $OXID_PATH"
-composer create-project --no-interaction --no-progress oxid-esales/oxideshop-project . dev-b-"${OXID}"-ce
+echo "installing OXID version ${OXID} (${OXID_EDITION}) on ${CI_SYSTEM} in path $OXID_PATH"
+composer create-project --no-interaction --no-progress oxid-esales/oxideshop-project . dev-b-"${OXID}"-"${OXID_EDITION}"
 sed -i -e "s@<dbHost>@${DB_HOST}@g; s@<dbName>@${DB_NAME}@g; s@<dbUser>@${DB_USER}@g; s@<dbPwd>@${DB_PWD}@g" source/config.inc.php
 sed -i -e "s@<sShopURL>@${SHOP_URL}@g; s@sLogLevel = 'error'@sLogLevel = '${SHOP_LOG_LEVEL}'@g" source/config.inc.php
 sed -i -e "s@<sShopDir>@${OXID_PATH}/source@g; s@<sCompileDir>@${OXID_PATH}/source/tmp@g" source/config.inc.php
 sed -i -e "s@partial_module_paths: null@partial_module_paths: ${TARGET_PATH}@g" test_config.yml
 sed -i -e "s@run_tests_for_shop: true@run_tests_for_shop: false@g" test_config.yml
 #cat test_config.yml
+
+if [ "$OXID_EDITION" != "ce" ]; then
+  [ ! -f "${BUILD_DIR}"/auth.json ] && echo "auth.json not found in ${BUILD_DIR}!" && exit 1
+  cp "${BUILD_DIR}"/auth.json ~/OXID
+fi
 
 composer config repositories.build path "${BUILD_DIR}"
 
