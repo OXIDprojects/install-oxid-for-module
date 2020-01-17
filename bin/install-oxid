@@ -48,6 +48,11 @@ mkdir -p OXID
 cd OXID || exit 1
 OXID_PATH=$(pwd)
 
+if [ "$OXID_EDITION" != "ce" ]; then
+  [ ! -f "${BUILD_DIR}"/auth.json ] && echo "auth.json not found in ${BUILD_DIR}!" && exit 1
+  cp "${BUILD_DIR}"/auth.json ~/.composer/
+fi
+
 echo "installing OXID version ${OXID} (${OXID_EDITION}) on ${CI_SYSTEM} in path $OXID_PATH"
 composer create-project --no-interaction --no-progress oxid-esales/oxideshop-project . dev-b-"${OXID}"-"${OXID_EDITION}"
 sed -i -e "s@<dbHost>@${DB_HOST}@g; s@<dbName>@${DB_NAME}@g; s@<dbUser>@${DB_USER}@g; s@<dbPwd>@${DB_PWD}@g" source/config.inc.php
@@ -58,8 +63,6 @@ sed -i -e "s@run_tests_for_shop: true@run_tests_for_shop: false@g" test_config.y
 #cat test_config.yml
 
 if [ "$OXID_EDITION" != "ce" ]; then
-  [ ! -f "${BUILD_DIR}"/auth.json ] && echo "auth.json not found in ${BUILD_DIR}!" && exit 1
-  cp "${BUILD_DIR}"/auth.json ~/OXID
   composer config repositories.oxid-pe-ee composer https://enterprise-edition.packages.oxid-esales.com/
 fi
 
