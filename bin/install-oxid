@@ -60,6 +60,7 @@ sed -i -e "s@run_tests_for_shop: true@run_tests_for_shop: false@g" test_config.y
 if [ "$OXID_EDITION" != "ce" ]; then
   [ ! -f "${BUILD_DIR}"/auth.json ] && echo "auth.json not found in ${BUILD_DIR}!" && exit 1
   cp "${BUILD_DIR}"/auth.json ~/OXID
+  composer config repositories.oxid-pe-ee composer https://enterprise-edition.packages.oxid-esales.com/
 fi
 
 composer config repositories.build path "${BUILD_DIR}"
