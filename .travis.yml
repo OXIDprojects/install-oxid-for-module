@@ -1,3 +1,4 @@
 script:
     - shellcheck bin/install-oxid
     - php -l bin/*.php
+    - bash tests/*
