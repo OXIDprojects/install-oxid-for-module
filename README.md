@@ -17,6 +17,7 @@ This will:
 1. Install an OXID shop in the ~/OXID directory
 1. Fill `config.inc.php` with some parameters
 1. Configure the `test_config.yml` to test the module
+1. Import the database (& run PE/EE migrations)
 1. Install the module to the shop via composer
 
 Environment Variables:
@@ -24,6 +25,7 @@ Environment Variables:
 | Variable Name | default |
 | --- | --- |
 | OXID | 6.0 |
+| OXID_EDITION | ce |
 | DB_HOST | 127.0.0.1 |
 | DB_NAME | oxid |
 | DB_USER | root |
