@@ -63,7 +63,7 @@ sed -i -e "s@run_tests_for_shop: true@run_tests_for_shop: false@g" test_config.y
 #cat test_config.yml
 
 MYSQL_PASS=''
-[ ! -z "$DB_PWD" ] || MYSQL_PASS="-p${DB_PWD}"
+[ -n "$DB_PWD" ] || MYSQL_PASS="-p${DB_PWD}"
 mysql -u"${DB_USER}" "${MYSQL_PASS}" "${DB_NAME}" -h"${DB_HOST}" < vendor/oxid-esales/oxideshop-ce/source/Setup/Sql/database_schema.sql
 mysql -u"${DB_USER}" "${MYSQL_PASS}" "${DB_NAME}" -h"${DB_HOST}" < vendor/oxid-esales/oxideshop-ce/source/Setup/Sql/initial_data.sql
 
