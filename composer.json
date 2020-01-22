@@ -1,6 +1,5 @@
 {
     "name": "oxid-professional-services/install-oxid-for-module",
-    "version": "0.2.0",
     "require": {},
     "bin": ["bin/install-oxid"]
 }
