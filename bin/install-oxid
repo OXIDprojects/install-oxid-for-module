@@ -62,7 +62,6 @@ sed -i -e "s@partial_module_paths: null@partial_module_paths: ${TARGET_PATH}@g" 
 sed -i -e "s@run_tests_for_shop: true@run_tests_for_shop: false@g" test_config.yml
 #cat test_config.yml
 
-MYSQL_PASS=''
 [ -n "$DB_PWD" ] || MYSQL_PASS="-p${DB_PWD}"
 mysql -u"${DB_USER}" "${MYSQL_PASS}" "${DB_NAME}" -h"${DB_HOST}" < vendor/oxid-esales/oxideshop-ce/source/Setup/Sql/database_schema.sql
 mysql -u"${DB_USER}" "${MYSQL_PASS}" "${DB_NAME}" -h"${DB_HOST}" < vendor/oxid-esales/oxideshop-ce/source/Setup/Sql/initial_data.sql
