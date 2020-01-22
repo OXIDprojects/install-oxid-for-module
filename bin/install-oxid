@@ -62,8 +62,10 @@ sed -i -e "s@partial_module_paths: null@partial_module_paths: ${TARGET_PATH}@g" 
 sed -i -e "s@run_tests_for_shop: true@run_tests_for_shop: false@g" test_config.yml
 #cat test_config.yml
 
-mysql -u"${DB_USER}" -p"${DB_PWD}" "${DB_NAME}" -h"${DB_HOST}" < vendor/oxid-esales/oxideshop-ce/source/Setup/Sql/database_schema.sql
-mysql -u"${DB_USER}" -p"${DB_PWD}" "${DB_NAME}" -h"${DB_HOST}" < vendor/oxid-esales/oxideshop-ce/source/Setup/Sql/initial_data.sql
+MYSQL_PASS=''
+[ ! -z "$DB_PWD" ] || MYSQL_PASS="-p${DB_PWD}"
+mysql -u"${DB_USER}" "${MYSQL_PASS}" "${DB_NAME}" -h"${DB_HOST}" < vendor/oxid-esales/oxideshop-ce/source/Setup/Sql/database_schema.sql
+mysql -u"${DB_USER}" "${MYSQL_PASS}" "${DB_NAME}" -h"${DB_HOST}" < vendor/oxid-esales/oxideshop-ce/source/Setup/Sql/initial_data.sql
 
 if [ "$OXID_EDITION" != "ce" ]; then
   vendor/bin/oe-eshop-db_migrate migrations:migrate
