@@ -1,0 +1,10 @@
+{
+    "name": "myvendor/mypackage",
+    "type": "oxid-module",
+    "authors": [
+        {
+            "name": "authorname",
+            "email": "authorname@company.com"
+        }
+    ]
+}
