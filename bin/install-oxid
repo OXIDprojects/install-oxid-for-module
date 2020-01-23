@@ -50,8 +50,8 @@ OXID_PATH=$(pwd)
 
 if [ "$OXID_EDITION" != "ce" ]; then
   [ ! -f "${BUILD_DIR}"/auth.json ] && echo "auth.json not found in ${BUILD_DIR}!" && exit 1
-  cp "${BUILD_DIR}"/auth.json ~/.composer/
 fi
+[ -f "${BUILD_DIR}"/auth.json ] && cp "${BUILD_DIR}"/auth.json ~/.composer/ && echo 'copied auth.json to composer home directory'
 
 echo "installing OXID version ${OXID} (${OXID_EDITION}) on ${CI_SYSTEM} in path $OXID_PATH"
 composer create-project --no-interaction --no-progress oxid-esales/oxideshop-project . dev-b-"${OXID}"-"${OXID_EDITION}"
