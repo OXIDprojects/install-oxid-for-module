@@ -37,7 +37,7 @@ fi
 # on a public or private repository like packagist
 VERSION="0.0.0-alpha$(( ( RANDOM % 100000 )  + 1 ))"
 TARGET_PATH=$(grep '"target-directory":' composer.json | awk -F'"' '{print $4}')
-PACKAGE_NAME=$(grep '"name":' composer.json | awk -F'"' '{print $4}')
+PACKAGE_NAME=$(php -r 'echo json_decode(file_get_contents("composer.json"))->name;')
 BUILD_DIR=$(pwd)
 PACKAGE_DIR="$(dirname "$(readlink -f "$0")")"
 
