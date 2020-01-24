@@ -6,7 +6,7 @@ $orgComposerContent = json_decode(file_get_contents("$buildDir/composer.json"), 
 $stuffToCopy = ['repositories', 'config'];
 $parts = [];
 foreach ($stuffToCopy as $key) {
-    $parts[$key] = $orgComposerContent[$key] ?: [];
+    $parts[$key] = $orgComposerContent[$key] ?? [];
 }
 
 $newComposerContent = json_decode(file_get_contents('composer.json'), true);
