@@ -1,0 +1,13 @@
+{
+    "name": "myvendor/mypackage",
+    "type": "oxid-module",
+    "config": {
+        "lock": false
+    },
+    "repositories": [
+      {
+        "type": "composer",
+        "url": "https://my-custom-repo.com/"
+      }
+    ]
+}
