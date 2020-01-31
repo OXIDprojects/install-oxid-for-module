@@ -36,7 +36,7 @@ fi
 # using a specific version to bypass composer cache that may have already found the module
 # on a public or private repository like packagist
 VERSION="0.0.0-alpha$(( ( RANDOM % 100000 )  + 1 ))"
-TARGET_PATH=$(composer config extra.oxideshop.target-directory)
+TARGET_PATH=$(composer config extra.oxideshop.target-directory || echo 'target-path-does-not-exist')
 PACKAGE_NAME=$(composer config name)
 BUILD_DIR=$(pwd)
 PACKAGE_DIR="$(dirname "$(readlink -f "$0")")"
