@@ -7,4 +7,4 @@ before_install:
 script:
     - shellcheck bin/install-oxid
     - php -l bin/*.php
-    - for t in tests/*.sh;do bash $t ;done
+    - for t in tests/*.sh;do echo "test $t"; bash $t ;done
