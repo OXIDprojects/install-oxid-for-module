@@ -22,15 +22,17 @@ This will:
 
 Environment Variables:
 
-| Variable Name | default |
-| --- | --- |
-| OXID | 6.0 |
-| OXID_EDITION | ce |
-| DB_HOST | 127.0.0.1 |
-| DB_NAME | oxid |
-| DB_USER | root |
-| DB_PWD |  |
-| SHOP_URL | http://127.0.0.1 |
-| SHOP_LOG_LEVEL | info |
+| Variable Name | default | description |
+| --- | --- | --- |
+| OXID | 6.0 | OXID Version to use, e.g. 6.0, 6.1, 6.2-rc |
+| OXID_EDITION | ce | pe and ee are also possible |
+| DB_HOST | 127.0.0.1 | |
+| DB_NAME | oxid | |
+| DB_USER | root | |
+| DB_PWD |  | |
+| SHOP_URL | http://127.0.0.1 | |
+| SHOP_LOG_LEVEL | info | |
+| USE_OPTIONAL_PACKAGES | 1 | does not install third-party payment modules and the testing library if set to 0 |
+
 
 You can see an example here: https://github.com/OXIDprojects/oxid-module-internals/blob/1973b16bbe56f972a4061725ec1ce96d371c1f7f/.travis.yml
